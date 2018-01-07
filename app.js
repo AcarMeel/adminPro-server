@@ -1,9 +1,17 @@
 // Imports
 var express = require('express');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var appRoutes = require('./routes/app');
+var userRoutes = require('./routes/user');
 
 // App declarations
 var app = express();
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+
 
 // Constants definitions
 const PORT = 3000 || process.env.PORT;
@@ -14,10 +22,10 @@ mongoose.connection.openUri('mongodb://localhost:27017/hospitalAdminPro', (err, 
     console.log('Database is running');
 });
 
+// App Routes
+app.use('/user', userRoutes);
+app.use('/', appRoutes);
 
-app.get('/', (req, res) => {
-    res.send('Hello');
-});
 app.listen(PORT, () => {
     console.log('app running on port '+ PORT);
-})
+});
