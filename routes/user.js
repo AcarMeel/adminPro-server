@@ -2,6 +2,7 @@ var express = require('express');
 var bcrypt = require('bcryptjs');
 var app = express();
 var User = require('../models/user');
+var mdAuthentication = require('../middleware/authentication');
 
 
 //====================================
@@ -26,7 +27,7 @@ app.get('/', (req, res) => {
 //====================================
 //   Post an user
 //====================================
-app.post('/', (req, res) => {
+app.post('/', mdAuthentication.verifyToken, (req, res) => {
     var body = req.body;
     var newUser = new User({
         name: body.name,
@@ -61,7 +62,7 @@ app.post('/', (req, res) => {
 //====================================
 //   Update user
 //====================================
-app.put('/:id', (req, res) => {
+app.put('/:id', mdAuthentication.verifyToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
@@ -98,7 +99,7 @@ app.put('/:id', (req, res) => {
 //====================================
 //   Delete user
 //====================================
-app.delete('/:id', (req, res) => {
+app.delete('/:id', mdAuthentication.verifyToken, (req, res) => {
     var id = req.params.id;
     User.findByIdAndRemove(id, (err, removedUser) => {
         if(err || !removedUser) {

@@ -3,6 +3,7 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var app = express();
 var User = require('../models/user');
+var SEED = require('../config/config').SEED;
 
 
 //====================================
@@ -10,7 +11,7 @@ var User = require('../models/user');
 //====================================
 app.post('/', (req, res) => {
     var body = req.body;
-    User.findOne({email: body.email}, (err, userDB) => {
+    User.findOne({ email: body.email }, (err, userDB) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -34,7 +35,7 @@ app.post('/', (req, res) => {
         }
         userDB.password = 'you cannot see';
         // Create token
-        var token = jwt.sign({ user: userDB }, '@hard-seed', { expiresIn: 14400});
+        var token = jwt.sign({ user: userDB },SEED, { expiresIn: 14400 });
         return res.status(200).json({
             ok: true,
             loggedUser: userDB,
