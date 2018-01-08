@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var appRoutes = require('./routes/app');
 var userRoutes = require('./routes/user');
+var loginRoutes = require('./routes/login');
 
 // App declarations
 var app = express();
@@ -24,6 +25,7 @@ mongoose.connection.openUri('mongodb://localhost:27017/hospitalAdminPro', (err, 
 
 // App Routes
 app.use('/user', userRoutes);
+app.use('/login', loginRoutes);
 app.use('/', appRoutes);
 
 app.listen(PORT, () => {
