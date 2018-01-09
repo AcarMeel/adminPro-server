@@ -5,9 +5,8 @@ var doctorSchema =	new Schema({
     name: {	type: String,	required: [true,	'The field is required']	},
     img: {	type: String,	required: false },
     user: {	type: Schema.Types.ObjectId,	ref: 'User',	required: true },
-    hospital: {	type: Schema.Types.ObjectId,	ref: 'Hospital',	
-    required: [true,'The field is required']}
+    hospital: {	type: Schema.Types.ObjectId,	ref: 'Hospital', required: [true,'The field is required']}
 });
-module.exports =	mongoose.model('Doctor',	doctorSchema);
+module.exports =	mongoose.model('Doctor', doctorSchema);
 
 // model
