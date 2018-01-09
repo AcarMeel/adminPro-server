@@ -9,3 +9,5 @@ var doctorSchema =	new Schema({
     required: [true,'The field is required']}
 });
 module.exports =	mongoose.model('Doctor',	doctorSchema);
+
+// model
