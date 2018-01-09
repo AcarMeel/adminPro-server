@@ -31,8 +31,8 @@ app.post('/', mdAuthentication.verifyToken, (req, res) => {
     var body = req.body;
     var newDoctor = new Doctor({
         name: body.name,
-        user: req.user._id
-        // hospital
+        user: req.user._id,
+        hospital: body.hospital
     });
 
     newDoctor.save((err, savedDoctor) => {
@@ -75,7 +75,7 @@ app.put('/:id', mdAuthentication.verifyToken, (req, res) => {
         // Assign new values
         foundDoctor.name = body.name;
         foundDoctor.user = req.user._id;
-        // hospital
+        foundDoctor.hospital = body.hospital;
         
         // Save new values
         foundDoctor.save((err, savedDoctor) => {
