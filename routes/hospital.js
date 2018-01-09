@@ -9,7 +9,11 @@ var mdAuthentication = require('../middleware/authentication');
 //   Gets all hospitals from DB
 //====================================
 app.get('/', (req, res) => {
+    var paging = req.query.paging || 0;
+    paging = Number(paging);
     Hospital.find({})
+    .skip(paging)
+    .limit(5)
     .populate('user', 'name email')
     .exec((err, hospitals) => {
     if(err) {
@@ -19,9 +23,11 @@ app.get('/', (req, res) => {
             errors: err
         });
     }
-    res.status(200).json({
-        ok: true,
-        data: hospitals
+    Hospital.count({}, (err, counting) => {
+        res.status(200).json({
+            ok: true,
+            data: hospitals
+        })
     })
 });
 });

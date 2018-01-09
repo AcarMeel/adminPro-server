@@ -9,7 +9,12 @@ var mdAuthentication = require('../middleware/authentication');
 //   Gets all users from DB
 //====================================
 app.get('/', (req, res) => {
-    User.find({},'name email role').exec((err, users) => {
+    var paging = req.query.paging || 0;
+    paging = Number(paging);
+    User.find({},'name email role')
+    .skip(paging)
+    .limit(5)
+    .exec((err, users) => {
     if(err) {
         return res.status(500).json({
             ok: false,
@@ -17,10 +22,14 @@ app.get('/', (req, res) => {
             errors: err
         });
     }
-    res.status(200).json({
-        ok: true,
-        data: users
+    User.count({}, (err, counting) => {
+        res.status(200).json({
+            ok: true,
+            data: users,
+            total: counting
+        })
     })
+
 });
 });
 
