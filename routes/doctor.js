@@ -9,7 +9,9 @@ var mdAuthentication = require('../middleware/authentication');
 //   Gets all doctors from DB
 //====================================
 app.get('/', (req, res) => {
-    Doctor.find({}).exec((err, doctors) => {
+    Doctor.find({})
+    .populate('user', 'name email')
+    .exec((err, doctors) => {
     if(err) {
         return res.status(500).json({
             ok: false,
