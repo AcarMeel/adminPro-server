@@ -5,7 +5,43 @@ var Hospital = require('../models/hospital');
 var Doctor = require('../models/doctor');
 var User = require('../models/user');
 
+//=============================
+// search by collection 
+//=============================
+app.get('/collection/:table/:filter', (req, res)=> {
+    var filter = req.params.filter;
+    var table = req.params.table;
+    var promise;
+    switch(table) {
+        case 'users':
+            promise = findUsers(filter, regex);
+            break;
+        case 'doctors':
+            promise = findDoctors(filter, regex);
+            break;
+        case 'hospitals':
+            promise = findHospitals(filter, regex);
+            break;
+        default:
+            return res.status(400).json({
+                ok: false,
+                msg: 'The filter do not correspond to any of the collections'
+            });
+            
+    }
 
+    Promise.then(data => {
+        res.status(200).json({
+            ok: true,
+            [table]: data
+        });
+    })
+
+})
+
+//=============================
+// general search
+//=============================
 app.get('/all/:filter', (req, res, next) => {
     var filter = req.params.filter;
     var regex = new RegExp(filter, 'i');
