@@ -11,6 +11,7 @@ var User = require('../models/user');
 app.get('/collection/:table/:filter', (req, res)=> {
     var filter = req.params.filter;
     var table = req.params.table;
+    var regex = new RegExp(filter, 'i');
     var promise;
     switch(table) {
         case 'users':
@@ -30,14 +31,14 @@ app.get('/collection/:table/:filter', (req, res)=> {
             
     }
 
-    Promise.then(data => {
+    promise.then(data => {
         res.status(200).json({
             ok: true,
             [table]: data
         });
     })
 
-})
+});
 
 //=============================
 // general search

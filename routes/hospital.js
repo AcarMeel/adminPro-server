@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     Hospital.find({})
     .skip(paging)
     .limit(5)
-    .populate('user', 'name email')
+    .populate('user', 'name')
     .exec((err, hospitals) => {
     if(err) {
         return res.status(500).json({

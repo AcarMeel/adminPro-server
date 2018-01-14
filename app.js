@@ -8,6 +8,7 @@ var loginRoutes = require('./routes/login');
 var hospitalRoutes = require('./routes/hospital');
 var doctorRoutes = require('./routes/doctor');
 var searchRoutes = require('./routes/search');
+var uploadRoutes = require('./routes/upload');
 
 // App declarations
 var app = express();
@@ -32,6 +33,7 @@ app.use('/hospital', hospitalRoutes);
 app.use('/doctor', doctorRoutes);
 app.use('/login', loginRoutes);
 app.use('/search', searchRoutes);
+app.use('/upload', uploadRoutes);
 app.use('/', appRoutes);
 
 app.listen(PORT, () => {
